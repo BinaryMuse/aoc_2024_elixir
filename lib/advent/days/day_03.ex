@@ -13,7 +13,7 @@ defmodule Advent.Days.Day03 do
       ComputerMemory.parse_advanced(input)
       |> elem(1)
 
-    {_, total} =
+    total =
       Enum.reduce(instrs, {true, 0}, fn val, {enabled, total} ->
         case val do
           {:do, _} ->
@@ -27,6 +27,7 @@ defmodule Advent.Days.Day03 do
             {enabled, total}
         end
       end)
+      |> elem(1)
 
     IO.puts("Part 2: #{total}")
   end
