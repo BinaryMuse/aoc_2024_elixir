@@ -24,6 +24,22 @@ defmodule Advent.Helpers.Grid do
     end
   end
 
+  def put(%__MODULE__{rows: rows} = grid, {x, y}, value) do
+    case in_bounds?(grid, {x, y}) do
+      true ->
+        row =
+          Enum.at(rows, y)
+          |> List.replace_at(x, value)
+
+        rows = List.replace_at(rows, y, row)
+
+        %__MODULE__{} |> set_rows(rows)
+
+      false ->
+        grid
+    end
+  end
+
   def fetch(%__MODULE__{} = grid, {x, y}) do
     case in_bounds?(grid, {x, y}) do
       false ->
@@ -36,6 +52,14 @@ defmodule Advent.Helpers.Grid do
 
   def in_bounds?(%__MODULE__{width: w, height: h}, {x, y}) do
     x >= 0 && y >= 0 && x < w && y < h
+  end
+
+  def with_cell(%__MODULE__{rows: rows}) do
+    Enum.with_index(rows)
+    |> Enum.flat_map(fn {row, y} ->
+      Enum.with_index(row)
+      |> Enum.map(fn {val, x} -> {val, {x, y}} end)
+    end)
   end
 
   defp set_rows(%__MODULE__{} = grid, rows) do
