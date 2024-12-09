@@ -79,5 +79,13 @@ defmodule Advent.Helpers.Grid do
     def nw(cell, steps \\ 1), do: cell |> north(steps) |> west(steps)
     def se(cell, steps \\ 1), do: cell |> south(steps) |> east(steps)
     def sw(cell, steps \\ 1), do: cell |> south(steps) |> west(steps)
+
+    def distance({x1, y1}, {x2, y2}) do
+      {x1 - x2, y1 - y2}
+    end
+
+    def add({x1, y1}, {x2, y2}) do
+      {x1 + x2, y1 + y2}
+    end
   end
 end
