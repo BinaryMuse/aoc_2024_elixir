@@ -21,7 +21,9 @@ defmodule Advent.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:nimble_parsec, "~> 1.4.0"}
+      {:nimble_parsec, "~> 1.4.0"},
+      {:arrays, "~> 2.1"},
+      {:arrays_aja, "~> 0.2.0"}
     ]
   end
 end

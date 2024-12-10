@@ -23,10 +23,16 @@ defmodule Advent.Days.Day09 do
   end
 
   def compact_memory(memory) do
+    memory
+    |> Arrays.new(implementation: Aja.Vector)
+    |> do_compact_memory()
+  end
+
+  def do_compact_memory(memory) do
     rev = Enum.reverse(memory)
 
     first_empty = Enum.find_index(memory, fn elem -> elem == :empty end)
-    first_block = Enum.count(memory) - 1 - Enum.find_index(rev, fn elem -> elem != :empty end)
+    first_block = Arrays.size(memory) - 1 - Enum.find_index(rev, fn elem -> elem != :empty end)
 
     if first_empty > first_block do
       memory
@@ -34,15 +40,16 @@ defmodule Advent.Days.Day09 do
       block = Enum.at(memory, first_block)
 
       memory
-      |> List.replace_at(first_block, :empty)
-      |> List.replace_at(first_empty, block)
-      |> compact_memory()
+      |> Arrays.replace(first_block, :empty)
+      |> Arrays.replace(first_empty, block)
+      |> do_compact_memory()
     end
   end
 
   def compact_files(memory) do
     memory
     |> Enum.chunk_by(fn x -> x end)
+    |> Arrays.new(implementation: Aja.Vector)
     |> do_compact_files()
   end
 
@@ -60,10 +67,9 @@ defmodule Advent.Days.Day09 do
         end
       end) || 0
 
-    file_loc =
-      Enum.count(chunks) - 1 - file_loc
+    file_loc = Arrays.size(chunks) - 1 - file_loc
 
-    file = Enum.at(chunks, file_loc)
+    file = Arrays.get(chunks, file_loc)
 
     empty_loc =
       Enum.find_index(chunks, fn lst ->
@@ -72,10 +78,10 @@ defmodule Advent.Days.Day09 do
 
     cond do
       Enum.count(moved) > 0 && Enum.min(moved) == 0 ->
-        List.flatten(chunks)
+        chunks |> Arrays.to_list() |> List.flatten()
 
       empty_loc != nil && file_loc != nil && empty_loc < file_loc ->
-        space = Enum.at(chunks, empty_loc)
+        space = Arrays.get(chunks, empty_loc)
         leftover_space_size = Enum.count(space) - Enum.count(file)
         leftover_space = Enum.take(space, leftover_space_size)
 
@@ -83,13 +89,17 @@ defmodule Advent.Days.Day09 do
 
         chunks =
           chunks
-          |> List.replace_at(empty_loc, file)
-          |> List.replace_at(file_loc, empty_chunk)
+          |> Arrays.replace(file_loc, empty_chunk)
+          |> Arrays.replace(empty_loc, file)
 
         chunks =
-          if leftover_space_size > 0,
-            do: List.insert_at(chunks, empty_loc + 1, leftover_space),
-            else: chunks
+          if leftover_space_size > 0 do
+            left = Arrays.slice(chunks, 0..empty_loc)
+            right = Arrays.slice(chunks, (empty_loc + 1)..Arrays.size(chunks))
+            Arrays.concat([left, [leftover_space], right])
+          else
+            chunks
+          end
 
         do_compact_files(chunks, MapSet.put(moved, hd(file)))
 
