@@ -7,7 +7,8 @@ defmodule Advent.MixProject do
       version: "0.1.0",
       elixir: "~> 1.17",
       start_permanent: Mix.env() == :prod,
-      deps: deps()
+      deps: deps(),
+      aliases: aliases()
     ]
   end
 
@@ -24,6 +25,12 @@ defmodule Advent.MixProject do
       {:nimble_parsec, "~> 1.4.0"},
       {:arrays, "~> 2.1"},
       {:arrays_aja, "~> 0.2.0"}
+    ]
+  end
+
+  defp aliases() do
+    [
+      setup: ["deps.get", "deps.compile"]
     ]
   end
 end
