@@ -23,8 +23,8 @@ defmodule Advent.Days.Day10 do
     |> Enum.reduce([], fn {item, cell}, acc ->
       if item == 0, do: [cell | acc], else: acc
     end)
-    |> Enum.reduce(%{}, fn trailhead, acc ->
-      Map.put(acc, trailhead, do_find_trails(trailhead, map, [trailhead]))
+    |> Map.new(fn trailhead ->
+      {trailhead, do_find_trails(trailhead, map, [trailhead])}
     end)
   end
 
@@ -44,9 +44,7 @@ defmodule Advent.Days.Day10 do
 
   def total_scores(trails) do
     Enum.map(trails, fn {_trailhead, trails} ->
-      Enum.reduce(trails, MapSet.new(), fn [final | _rest], acc ->
-        MapSet.put(acc, final)
-      end)
+      MapSet.new(trails, fn [final | _rest] -> final end)
     end)
     |> Enum.map(&MapSet.size/1)
     |> Enum.sum()
