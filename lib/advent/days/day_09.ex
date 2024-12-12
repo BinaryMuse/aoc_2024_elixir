@@ -1,4 +1,6 @@
 defmodule Advent.Days.Day09 do
+  use Advent.Day
+
   def run(input) do
     checksum = parse_map(input) |> compact_memory() |> calculate_checksum()
     IO.puts("Day 1: #{checksum}")

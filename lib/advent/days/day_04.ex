@@ -1,4 +1,6 @@
 defmodule Advent.Days.Day04 do
+  use Advent.Day
+
   alias Advent.Helpers.Grid
 
   def run(input) do

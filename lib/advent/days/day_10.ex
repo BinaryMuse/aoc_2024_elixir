@@ -1,4 +1,6 @@
 defmodule Advent.Days.Day10 do
+  use Advent.Day
+
   alias Advent.Helpers.Grid
   alias Advent.Helpers.Grid.Cell
 

@@ -1,4 +1,6 @@
 defmodule Advent.Days.Day02 do
+  use Advent.Day
+
   def run(input) do
     count = count_safe_reports(input)
     IO.puts("Part 1: #{count}")

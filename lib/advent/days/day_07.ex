@@ -1,4 +1,6 @@
 defmodule Advent.Days.Day07 do
+  use Advent.Day
+
   def run(input) do
     equations = parse_input(input)
 

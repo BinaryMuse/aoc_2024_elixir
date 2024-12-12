@@ -1,4 +1,6 @@
 defmodule Advent.Days.Day05 do
+  use Advent.Day
+
   def run(input) do
     {rules, updates} = parse_input(input)
 

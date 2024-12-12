@@ -1,4 +1,6 @@
 defmodule Advent.Days.Day11 do
+  use Advent.Day
+
   def run(input) do
     stream = parse(input) |> make_stream()
 

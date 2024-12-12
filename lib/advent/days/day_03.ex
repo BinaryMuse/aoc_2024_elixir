@@ -1,4 +1,6 @@
 defmodule Advent.Days.Day03 do
+  use Advent.Day
+
   alias Advent.Parsers.ComputerMemory
 
   def run(input) do

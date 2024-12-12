@@ -1,4 +1,6 @@
 defmodule Advent.Days.Day01 do
+  use Advent.Day
+
   def run(input) do
     [left, right] =
       String.split(input, "\n")
