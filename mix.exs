@@ -24,7 +24,8 @@ defmodule Advent.MixProject do
     [
       {:nimble_parsec, "~> 1.4.0"},
       {:arrays, "~> 2.1"},
-      {:arrays_aja, "~> 0.2.0"}
+      {:arrays_aja, "~> 0.2.0"},
+      {:igniter, "~> 0.4.8"}
     ]
   end
 
